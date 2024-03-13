@@ -10,10 +10,34 @@ export type CreateUserRequest = {
   name: string;
   password: string;
 };
+export type LoginUserRequest = {
+  username: string;
+  password: string;
+};
+
+export type UpdateUserRequest = {
+  name?: string;
+  password?: string;
+};
+
+export type GetAllUsers = {
+  username: string;
+  name: string;
+  createAt?: Date;
+  updateAt?: Date;
+};
 
 export function toUserResponse(user: User): UserResponse {
   return {
     name: user.name,
     username: user.username,
+  };
+}
+export function getAllUserResponse(user: User): GetAllUsers {
+  return {
+    name: user.name,
+    username: user.username,
+    createAt: user.createAt,
+    updateAt: user.updateAt,
   };
 }
