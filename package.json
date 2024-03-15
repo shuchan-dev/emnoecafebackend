@@ -7,7 +7,8 @@
     "test": "jest product.test.ts",
     "build": "tsc",
     "start": "node dist/main.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/main.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+    "postinstall": "prisma generate"
   },
   "jest": {
     "preset": "ts-jest",
