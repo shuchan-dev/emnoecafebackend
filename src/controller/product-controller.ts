@@ -15,10 +15,15 @@ export class ProductController {
       const request: CreateProductRequest = req.body as CreateProductRequest;
       // lalu kirim ke service
       const response = await ProductService.create(req.user!, request);
-      // lalu return response nya
-      res.status(200).json({
-        data: response,
-      });
+      // Persiapkan data respons sesuai format yang diinginkan
+      const responseData = {
+        success: true,
+        status: 200,
+        message: "Successful",
+        data: response, // Response dari service
+      };
+      // Kirim respons
+      res.status(200).json(responseData);
     } catch (e) {
       next(e);
     }
@@ -30,26 +35,59 @@ export class ProductController {
       // ambil id dari params dan kirim ke service.
       const productId = Number(req.params.productId);
       const response = await ProductService.get(req.user!, productId);
+      // Persiapkan data respons sesuai format yang diinginkan
+      const responseData = {
+        success: true,
+        status: 200,
+        message: "Successful",
+        data: response, // Response dari service
+      };
       // lalu return response nya
-      res.status(200).json({
-        data: response,
-      });
+      res.status(200).json(responseData);
     } catch (e) {
       next(e);
     }
   }
+  // get All product
   static async getAll(req: UserRequest, res: Response, next: NextFunction) {
     try {
       // Memanggil layanan untuk melakukan proses pengambilan data
       const response = await ProductService.getAllProduct();
+      // Persiapkan data respons sesuai format yang diinginkan
+      const responseData = {
+        success: true,
+        status: 200,
+        message: "Successful",
+        data: response, // Response dari service
+      };
       // Mengirimkan respons JSON
-      res.status(200).json({
-        data: response,
-      });
+      res.status(200).json(responseData);
     } catch (e) {
       // Menangani kesalahan yang terjadi selama proses
       next(e);
     }
     return;
+  }
+
+  // get all product by username_seller
+  static async getByUser(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      //  Memanggil layanan untuk melakukan proses pengambilan data
+      const response = await ProductService.getAllProductByUsernameSeller(
+        req.user!
+      );
+      // Persiapkan data respons sesuai format yang diinginkan
+      const responseData = {
+        success: true,
+        status: 200,
+        message: "Successful",
+        data: response, // Response dari service
+      };
+      // lalu return response nya
+      res.status(200).json(responseData);
+    } catch (e) {
+      // jika ada error tangkap erronya disini
+      next(e);
+    }
   }
 }

@@ -191,7 +191,7 @@ describe("DELETE /api/users/curent", () => {
   });
 });
 
-describe("GET /api/users", () => {
+describe("GET /api/users/current/getall", () => {
   beforeEach(async () => {
     await UserTest.create();
   });
@@ -200,7 +200,7 @@ describe("GET /api/users", () => {
   });
   it("should get all data", async () => {
     const response = await supertest(web)
-      .get("/api/users")
+      .get("/api/users/current/getall")
       .set("X-API-TOKEN", "test");
     logger.debug(response.body);
     expect(response.status).toBe(200);

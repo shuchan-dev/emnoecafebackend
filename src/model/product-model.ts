@@ -34,3 +34,27 @@ export function toProductResponse(product: Product): ProductResponse {
     updateAt: product.updateAt,
   };
 }
+export type GetAllProductResponse = {
+  id: number;
+  product_name: string;
+  product_desc: string;
+  product_category: string;
+  product_price: string;
+  product_quantity?: string | null;
+  createAt?: Date;
+  updateAt?: Date;
+};
+export function toGetAllProductResponse(
+  product: Product
+): GetAllProductResponse {
+  return {
+    id: product.id,
+    product_name: product.product_name,
+    product_desc: product.product_desc,
+    product_category: product.product_category,
+    product_price: product.product_price,
+    product_quantity: product.product_quantity,
+    createAt: product.createAt,
+    updateAt: product.updateAt,
+  };
+}

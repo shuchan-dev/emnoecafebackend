@@ -1,7 +1,9 @@
 import { User } from "@prisma/client";
 import {
   CreateProductRequest,
+  GetAllProductResponse,
   ProductResponse,
+  toGetAllProductResponse,
   toProductResponse,
 } from "../model/product-model";
 import { ProductValidation } from "../validation/product-valodation";
@@ -60,16 +62,47 @@ export class ProductService {
   }
 
   // getAll products
-  static async getAllProduct(): Promise<ProductResponse[]> {
+  static async getAllProduct(): Promise<GetAllProductResponse[]> {
+    // cek produk ada atau tidak di database,
     const products = await prisma.product.findMany();
+    // jika tidak ada maka return error nya
     if (!products || products.length === 0) {
       throw new ResponseError(
         404,
         "The product you are looking for does not exist"
       );
     }
-    const response = products.map((products) => toProductResponse(products));
-    // after done return the response konfersi ke response
+    // jika ada maka return hasilnya sesuai model response yang sudah dibuat
+    const response = products.map((products) =>
+      toGetAllProductResponse(products)
+    );
+    return response;
+  }
+
+  // get All product by username_seller
+  static async getAllProductByUsernameSeller(
+    user: User
+  ): Promise<ProductResponse[]> {
+    // check produk ada atau tidak di database, berdasarkan username
+    const product = await prisma.product.findMany({
+      where: {
+        username_seller: user.username,
+      },
+    });
+
+    // format response error ketika product kosung atau belum ada product nya
+    const responseData: any = {
+      success: true,
+      status: 404,
+      message: "Successful",
+      data: "you haven't made a product yet", // Response dari error
+    };
+    // jika tidak ada maka return error nya
+    if (!product || product.length === 0) {
+      throw new ResponseError(404, responseData);
+    }
+    // jika ada maka return hasilnya sesuai model response yang sudah dibuat
+    const response = product.map((product) => toProductResponse(product));
     return response;
   }
 }

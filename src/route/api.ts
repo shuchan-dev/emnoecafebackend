@@ -11,8 +11,9 @@ apiRouter.use(authMiddleware);
 apiRouter.get("/api/users/current", UserController.get);
 apiRouter.patch("/api/users/current", UserController.update);
 apiRouter.delete("/api/users/current", UserController.logout);
-apiRouter.get("/api/users", UserController.getAll);
+apiRouter.get("/api/users/current/getall", UserController.getAll);
 
 // Product API
-apiRouter.post("/api/products", ProductController.create);
-apiRouter.get("/api/products/:productId(\\d+)", ProductController.get);
+apiRouter.post("/api/products/user/create", ProductController.create);
+apiRouter.get("/api/products/user/:productId(\\d+)", ProductController.get);
+apiRouter.get("/api/products/user", ProductController.getByUser);
