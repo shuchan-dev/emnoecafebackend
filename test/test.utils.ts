@@ -46,7 +46,7 @@ export class ProductTest {
       data: {
         product_name: "test",
         product_desc: "test",
-        product_category: "test",
+        product_category: "makanan",
         product_price: "1",
         product_quantity: "1",
         username_seller: "test",

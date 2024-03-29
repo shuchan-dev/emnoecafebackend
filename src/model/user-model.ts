@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Product, User } from "@prisma/client";
 
 export type UserResponse = {
   username: string;
@@ -20,24 +20,54 @@ export type UpdateUserRequest = {
   password?: string;
 };
 
-export type GetAllUsers = {
-  username: string;
-  name: string;
-  createAt?: Date;
-  updateAt?: Date;
-};
-
 export function toUserResponse(user: User): UserResponse {
   return {
     name: user.name,
     username: user.username,
   };
 }
-export function getAllUserResponse(user: User): GetAllUsers {
+
+export type GetAllUsers = {
+  username: string;
+  name: string;
+  createAt?: Date;
+  updateAt?: Date;
+  product?: ProductResponse[];
+};
+
+export type ProductResponse = {
+  id: number;
+  product_name: string;
+  product_desc: string;
+  product_category: string;
+  product_price: string;
+  product_quantity?: string | null;
+  createAt?: Date;
+  updateAt?: Date;
+  username_seller: string;
+};
+
+export function getAllUserResponse(
+  user: User,
+  product: Product[]
+): GetAllUsers {
   return {
     name: user.name,
     username: user.username,
     createAt: user.createAt,
     updateAt: user.updateAt,
+    product: product.map((p) => {
+      return {
+        id: p.id,
+        product_name: p.product_name,
+        product_desc: p.product_desc,
+        product_category: p.product_category,
+        product_price: p.product_price,
+        product_quantity: p.product_quantity,
+        createAt: p.createAt,
+        updateAt: p.updateAt,
+        username_seller: p.username_seller,
+      };
+    }),
   };
 }

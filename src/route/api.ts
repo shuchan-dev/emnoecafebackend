@@ -16,4 +16,10 @@ apiRouter.get("/api/users/current/getall", UserController.getAll);
 // Product API
 apiRouter.post("/api/products/user/create", ProductController.create);
 apiRouter.get("/api/products/user/:productId(\\d+)", ProductController.get);
+apiRouter.put("/api/products/user/:productId(\\d+)", ProductController.update);
+apiRouter.delete(
+  "/api/products/user/:productId(\\d+)",
+  ProductController.remove
+);
+apiRouter.get("/api/products/search", ProductController.search);
 apiRouter.get("/api/products/user", ProductController.getByUser);

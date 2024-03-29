@@ -3,10 +3,10 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  // url      = env("DATABASE_URL")  // local
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // local
+  // url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model User {
@@ -32,7 +32,7 @@ model Product {
   createAt         DateTime @default(now())
   updateAt         DateTime @updatedAt
   // relation to user
-  username_seller  String   @db.VarChar(100)
+  username_seller  String   @unique @db.VarChar(100)
   user             User     @relation(fields: [username_seller], references: [username])
 
   @@map("products")

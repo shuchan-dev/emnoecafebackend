@@ -1,5 +1,14 @@
-# Keep environment variables out of version control
+# File types
+
+# Environment 
 .env
-/node_modules
-dist
+
+# Tests
+test/* 
 manual-test.http
+
+# Dependencies
+/node_modules
+
+# Build output
+dist/*

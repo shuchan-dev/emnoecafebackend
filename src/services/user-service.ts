@@ -126,11 +126,18 @@ export class UserService {
     });
     return toUserResponse(result);
   }
-  // Create Serveice get all User after login
+  // Create Service get all User after login
   static async getAll(): Promise<GetAllUsers[]> {
-    const result = await prisma.user.findMany();
+    const result = await prisma.user.findMany({
+      include: {
+        Products: true,
+      },
+    });
 
-    const response = result.map((user) => getAllUserResponse(user));
+    const response = result.map((user) => {
+      return getAllUserResponse(user, user.Products);
+    });
+
     // after done return the response konfersi ke response
     return response;
   }

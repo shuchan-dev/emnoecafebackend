@@ -13,3 +13,6 @@ publicRouter.post("/api/users/login", UserController.login);
 
 // API GET ALL
 publicRouter.get("/api/products", ProductController.getAll);
+
+// GET Product By id
+publicRouter.get("/api/products/:id(\\d+)", ProductController.getById);
